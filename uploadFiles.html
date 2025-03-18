@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        img{
+            width: 200px;
+            height: 200px;
+        }
+    </style>
+</head>
+<body>
+    <input multiple type="file">
+    <!-- <input type="file"> -->
+    <button onclick="handleSubmit()">submit</button>
+
+    <script>
+        let body = document.querySelector('body')
+        let inputTag = document.querySelector('input')
+
+
+        //upload multiple
+        // let ansArr = [];
+        const handleSubmit = ()=>{
+            let files = inputTag.files;
+            console.log(files) 
+            let arr = [...files]
+            console.log(arr)
+
+          let ansArr =   arr.map((obj,i)=>{
+
+                let reader = new FileReader();
+                reader.readAsDataURL(obj)
+                
+                let imagetag = document.createElement('img');
+                    let ans;
+                    
+                reader.onload = ()=>{
+                imagetag.src = reader.result
+                body.append(imagetag)
+                    ans = reader.result
+                }
+                reader.onerror=()=>{
+
+                }
+                return ans
+              
+            })
+
+            console.log(ansArr)
+            console.log(ansArr[0])
+        }
+
+        //upload using cloudinary
+        // const handleSubmit = ()=>{
+        //     let files = inputTag.files;
+        //     console.log(files) 
+        //     let arr = [...files]
+        //     console.log(arr)
+
+        //     arr.forEach(async(obj,i)=>{
+        //         let formData = new FormData();
+        //         formData.append('file',obj);
+        //         formData.append('upload_preset','social12-2')
+
+        //       let res = await fetch('https://api.cloudinary.com/v1_1/dsf7eyovf/upload',{
+        //         method:"POST",
+        //         mode: 'cors' ,
+        //         body:formData
+        //       })
+
+        //       let data = await res.json();
+        //       console.log(data)
+
+        //       let imageTag = document.createElement('img');
+        //       imageTag.src = data.secure_url;
+        //       body.append(imageTag)
+
+              
+        //     })
+
+        // }
+        // const handleSubmit = ()=>{
+        //     let files = inputTag.files;
+        //     console.log(files) 
+        //     let arr = [...files]
+        //     console.log(arr)
+        //     arr.forEach((obj,i)=>{
+        //         let reader = new FileReader();
+        //         reader.readAsDataURL(obj)
+
+        //         let imagetag = document.createElement('img');
+                
+        //         reader.onload = ()=>{
+        //         imagetag.src = reader.result
+        //         body.append(imagetag)
+        //         }
+        //         reader.onerror=()=>{
+
+        //         }
+              
+        //     })
+
+        // }
+
+        // function handleSubmit(){
+        //     let files = inputTag.files[0];
+        //     console.log(files)
+
+        //     let imageTag = document.createElement('img');
+        //     // imageTag.src = URL.createObjectURL(files);
+        //     console.log(imageTag);
+        //     body.append(imageTag)
+
+        // }
+
+        //read file using file reader
+        // function handleSubmit(){
+        //     let files = inputTag.files[0];
+        //     console.log(files)
+        //     let imageTag = document.createElement('img');
+          
+        //     let reader = new FileReader();
+        //     reader.readAsDataURL(files);
+
+        //     reader.onload = ()=>{
+        //         console.log(reader.result)
+        //         imageTag.src = reader.result
+        //     }
+
+        //     reader.onerror = ()=>{
+        //         console.log(reader.error)
+        //     }
+
+           
+        //     // imageTag.src = URL.createObjectURL(files);
+        //     console.log(imageTag);
+        //     body.append(imageTag)
+
+        // }
+    </script>
+</body>
+</html>
