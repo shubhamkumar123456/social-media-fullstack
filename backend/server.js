@@ -8,7 +8,10 @@ connection()
 
 const userRoutes = require('./routes/userRoutes')
 
-app.use(cors())
+app.use(cors({
+  origin: 'http://localhost:5173', // Specify your frontend's URL
+  credentials: true,               // Allow cookies and authorization headers
+}));
 app.use(express.json())
 
 app.set('view engine', 'ejs')

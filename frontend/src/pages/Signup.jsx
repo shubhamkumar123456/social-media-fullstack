@@ -2,8 +2,18 @@ import axios from 'axios';
 import React, { useState } from 'react'
 import { IoEyeOutline } from "react-icons/io5";
 import { Link } from 'react-router-dom';
+import axiosInstance from '../api/axiosInstance';
+import { toast } from 'react-toastify';
+import { useSelector } from 'react-redux';
+import LoaderComponent from '../components/LoaderComponent';
+
 
 const Signup = () => {
+
+    let authSlice = useSelector((state)=>state.auth)
+    let loading = authSlice.loading
+    console.log(loading)
+
     const [showPassword, setshowPassword] = useState(false);
     const [details, setdetails] = useState({
         firstName:"",
@@ -15,16 +25,20 @@ const Signup = () => {
 
     const handleSubmit = async(e)=>{
         e.preventDefault()
-        console.log(details)
+        // console.log(details)
         try {
-            let res = await axios.post('http://localhost:8080/users/create',details);
-        let data = res.data;
-        console.log(data)
+        
+          let response = await axiosInstance.post('/users/create',details)
+        //   console.log(response)
+        //   console.log(response.data)
+          toast.success(response.data.msg,{position:'top-center'})
         } catch (error) {
-                console.log(error.response.data.msg)
+                // console.log(error)
+                toast.error(error.response?error.response.data.msg:'something went wrong',{position:'top-center'})
         }
     }
     return (
+        loading===true?<LoaderComponent/>:
         <div className='flex  justify-center items-center  bg-amber-300 h-full'>
             <div className='h-full w-1/2'>
                 <img className='w-full h-full object-cover object-center' src="https://www.designmantic.com/blog/wp-content/uploads/2016/07/social-media-cover-image.png" alt="" />
