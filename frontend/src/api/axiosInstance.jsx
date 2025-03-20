@@ -18,9 +18,10 @@ const axiosInstance = axios.create({
     axiosInstance.interceptors.request.use(
         (config) => {
             dispatch(updateLoading(true));
-            const token = localStorage.getItem('token');
+            const token = JSON.parse(localStorage.getItem('authSocial'))
             if (token) {
-                config.headers.Authorization = token;
+                console.log(token.token)
+                config.headers.Authorization = token.token;
             }
             return config;
         },

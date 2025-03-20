@@ -182,6 +182,16 @@ const finalPasswordReset = async(req,res)=>{
     res.status(200).json({msg:"user updated successfully"});
 }
 
+const getLoggedInUser = async(req,res)=>{
+    try {
+        let user = {...req.user};
+        delete user.password
+        res.status(200).json(user)
+    } catch (error) {
+        res.status(500).json({msg:"error in getting user",error:error.message})
+    }
+}
+
 
 module.exports = {
     registerUser,
@@ -190,5 +200,6 @@ module.exports = {
     deleteUser,
     forgetPassword,
     resetPassword,
-    finalPasswordReset
+    finalPasswordReset,
+    getLoggedInUser
 }
