@@ -44,7 +44,7 @@ const Login = () => {
         }
     }
     return (
-        loading===true?<LoaderComponent/>:
+        // loading===true?<LoaderComponent/>:
         <div className='flex  justify-center items-center  bg-amber-300 h-full'>
             <div className='h-full w-1/2'>
                 <img className='w-full h-full object-cover object-center' src="https://www.designmantic.com/blog/wp-content/uploads/2016/07/social-media-cover-image.png" alt="" />
@@ -62,8 +62,9 @@ const Login = () => {
                        <input onChange={(e)=>setdetails({...details,[e.target.name]:e.target.value})} name='password' className='px-3 w-full border py-2 rounded outline-none' type={showPassword?'text':'password'} required />
                        <IoEyeOutline onClick={()=>setshowPassword(!showPassword)} className='cursor-pointer absolute right-2 top-[50%] -translate-y-[50%]'/>
                        </div>
-                    </div>
 
+                    </div>
+                        <Link className='text-blue-400 text-end block my-2'  to={'/forget-password'}>forgot password?</Link>
                     <button onClick={handleSubmit} className='bg-green-500 rounded-md px-3 py-2 w-full hover:bg-green-600 hover:text-white'>Login</button>
              
                     <p className='text-center my-2'>Don't have an account?  <Link className='text-blue-500' to={'/signup'}>register</Link></p>

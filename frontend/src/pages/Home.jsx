@@ -1,9 +1,10 @@
 import React from 'react'
+import UploadPostCard from '../components/UploadPostCard'
 
 const Home = () => {
   return (
     <div>
-      this is home page
+      <UploadPostCard/>
     </div>
   )
 }

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useState } from 'react'
 import { IoEyeOutline } from "react-icons/io5";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axiosInstance from '../api/axiosInstance';
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
@@ -9,7 +9,7 @@ import LoaderComponent from '../components/LoaderComponent';
 
 
 const Signup = () => {
-
+    const navigate = useNavigate()
     let authSlice = useSelector((state)=>state.auth)
     let loading = authSlice.loading
     console.log(loading)
@@ -31,14 +31,17 @@ const Signup = () => {
           let response = await axiosInstance.post('/users/create',details)
         //   console.log(response)
         //   console.log(response.data)
-          toast.success(response.data.msg,{position:'top-center'})
+            if(response.status==201 || response.status==200){
+                navigate('/login')
+                toast.success(response.data.msg,{position:'top-center'})
+            }
         } catch (error) {
                 // console.log(error)
                 toast.error(error.response?error.response.data.msg:'something went wrong',{position:'top-center'})
         }
     }
     return (
-        loading===true?<LoaderComponent/>:
+        // loading===true?<LoaderComponent/>:
         <div className='flex  justify-center items-center  bg-amber-300 h-full'>
             <div className='h-full w-1/2'>
                 <img className='w-full h-full object-cover object-center' src="https://www.designmantic.com/blog/wp-content/uploads/2016/07/social-media-cover-image.png" alt="" />

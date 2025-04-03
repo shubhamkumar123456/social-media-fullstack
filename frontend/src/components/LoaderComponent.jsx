@@ -2,7 +2,7 @@ import React from 'react'
 
 const LoaderComponent = () => {
   return (
-    <div class="space-x-4 h-full flex justify-center items-center flex-col">
+    <div class="space-x-4 h-[100vh] flex justify-center top-0 left-0 w-full absolute bg-[rgba(0,0,0,0.3)] items-center flex-col">
 
     <svg xmlns="http://www.w3.org/2000/svg" class="w-10 animate-[spin_0.8s_linear_infinite] fill-blue-600" viewBox="0 0 24 24">
       <path

@@ -5,7 +5,30 @@ body{
   color: white;
 }
 
-section{
-  height: 100vh;
+.uploader{
+  position: relative;
+  background: transparent;
+  z-index: 1;
+  overflow: hidden;
+  color: white !important;
+  background-image: url(https://t3.ftcdn.net/jpg/05/54/12/28/360_F_554122808_70uodDBTFvbJJjM8Fu9Vy24WHK614SXh.jpg);
+  background-size: cover;
+  background-position: center;
+
+}
+.uploader::before{
+  content: '';
+  position: absolute;
+  filter: blur(30px);
   width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  background-color: rgb(235,233,188,0.5)
+}
+
+.emojiPicker{
+  position: absolute;
+  /* left: calc(100% - ); */
 }

@@ -192,6 +192,35 @@ const getLoggedInUser = async(req,res)=>{
     }
 }
 
+const followUser = async(req,res)=>{
+    const {friendId} = req.params;
+    const {_id} = req.user;
+try {
+    
+    let user = await userCollection.findById(_id);
+    let friend = await userCollection.findById(friendId);
+
+    if(user.followings.includes(friendId) && friend.followers.includes(_id)){
+        user.followings.pull(friendId);
+        friend.followers.pull(_id);
+        await user.save()
+        await friend.save();
+        res.status(200).json({msg:"unfollow successfully"})
+    }
+    else{
+        user.followings.push(friendId);
+        friend.followers.push(_id);
+        await user.save()
+        await friend.save();
+        res.status(200).json({msg:"follow successfully"})
+    }
+} catch (error) {
+    res.status(500).json({msg:"error in following part" , error:error.message})
+}
+
+
+}
+
 
 module.exports = {
     registerUser,
@@ -201,5 +230,6 @@ module.exports = {
     forgetPassword,
     resetPassword,
     finalPasswordReset,
-    getLoggedInUser
+    getLoggedInUser,
+    followUser
 }

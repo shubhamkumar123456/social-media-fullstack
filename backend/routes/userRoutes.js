@@ -1,5 +1,5 @@
 const express = require('express');
-const { registerUser, loginUser, updateUser, deleteUser, forgetPassword, resetPassword, finalPasswordReset, getLoggedInUser } = require('../controllers/userController');
+const { registerUser, loginUser, updateUser, deleteUser, forgetPassword, resetPassword, finalPasswordReset, getLoggedInUser, followUser } = require('../controllers/userController');
 const router = express.Router();
 const {body} = require('express-validator');
 const checkToken = require('../middleware/checkToken');
@@ -22,7 +22,8 @@ router.delete('/delete',checkToken,deleteUser)
 router.post('/reset-password',forgetPassword)
 router.get('/reset-password/:resetToken',resetPassword)
 router.post('/forgot-password/:resetToken',finalPasswordReset)
-router.get('/loggedInUser',checkToken,getLoggedInUser)
+router.get('/loggedInUser',checkToken,getLoggedInUser);
+router.put('/follow/:friendId',checkToken,followUser)
 
 
 

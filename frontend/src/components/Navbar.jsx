@@ -1,9 +1,12 @@
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom'
 import { logoutUser } from '../features/authSlice';
 
 const Navbar = () => {
+    let userSlice = useSelector((state)=>state.auth);
+    console.log(userSlice)
+    let login = userSlice.login
     const [showDropDown, setshowDropDown] = useState(false);
     let dispatch = useDispatch()
   return (
@@ -11,9 +14,9 @@ const Navbar = () => {
         <nav className='w-full flex items-center px-8 justify-between bg-white text-black h-[65px]'>
             <Link to={'/'} className='text-xl font-semibold'>Social App</Link>
 
-                    <form action="">
+                  { login===true && <form action="">
                         <input className='px-3 py-2 rounded border outline-none' type="text" placeholder='search friends..' />
-                    </form>
+                    </form>}
 
             <div className='relative'>
                 <img onClick={()=>setshowDropDown(!showDropDown)} className='w-[40px] h-[40px] rounded-full border' src="https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png" alt="" />

@@ -25,13 +25,30 @@ const userSchema = new mongoose.Schema({
         type: String,
         default: 'this is bio'
     },
+    // role:{
+    //     type:String,
+    //     default:"user"
+    // }
 }, { timestamps: true })
 
 userSchema.add({
     resetPasswordToken:{
         type:String,
         expires:'1'
-    }
+    },
+
+    followers:[
+        {
+            type:mongoose.Schema.Types.ObjectId,
+            ref:'users'
+        }
+    ],
+    followings:[
+        {
+            type:mongoose.Schema.Types.ObjectId,
+            ref:'users'
+        }
+    ]
     
 })
 

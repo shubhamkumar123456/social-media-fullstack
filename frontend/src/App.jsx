@@ -8,6 +8,8 @@ import { useDispatch, useSelector } from "react-redux"
 import { setupInterceptors } from "./api/axiosInstance"
 import { useEffect } from "react"
 import { fetchUserDetails } from "./features/authSlice"
+import LoaderComponent from "./components/LoaderComponent"
+import ForgetPassword from "./pages/ForgetPassword"
 
 function App() {
   const dispatch = useDispatch();
@@ -33,10 +35,12 @@ function App() {
       <BrowserRouter>
         <Navbar />
         <main className="h-[calc(100vh-65px)]">
+        {authSlice.loading &&<LoaderComponent/>}
           <Routes>
             <Route path="/" element={login===true ? <Home /> : <Navigate to={'/login'}/>} />
             <Route path="/login" element={login===false ? <Login /> : <Navigate to='/'/>} />
             <Route path="/signup" element={login ===false? <Signup /> : <Navigate to='/'/>} />
+            <Route path="/forget-password" element={login ===false? <ForgetPassword /> : <Navigate to='/'/>} />
           </Routes>
         </main>
         <ToastContainer />
