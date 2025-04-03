@@ -51,7 +51,7 @@ const UploadPostCard = () => {
     formData.append('title', text);
 
     obj.file.forEach((file) => {
-      formData.append('files', file); // Correct way to append multiple files
+      formData.append('file', file); // Correct way to append multiple files
     });
 
     try {

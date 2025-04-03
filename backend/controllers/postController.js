@@ -1,15 +1,24 @@
 const PostCollection = require("../models/postCollection");
-
+const cloudinary = require('./Cloudinary')
 exports.createPost = async (req, res) => {
   try {
     const { title } = req.body;
     const { _id } = req.user;
     // req.files --> gives and array of objects
-    // const {file} = req.files
-
 
     console.log(req.body);
-    console.log(req.files)
+    console.log(req.files.file)
+
+    let uploaded = req.files.file.map((obj,i)=>{
+      return cloudinary.uploader.upload(obj.tempFilePath, {
+        folder: "uploads", // Folder name in Cloudinary
+      });
+    })
+    console.log(uploaded)
+    let ans = await Promise.all(uploaded)
+    .then((ans)=>console.log(ans))
+    .catch((ans)=>console.log(ans))
+
     // let post = await PostCollection.create({
     //     title,
     //     file,

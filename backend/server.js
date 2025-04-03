@@ -3,14 +3,12 @@ const app = express();
 const port = 8080;
 require("dotenv").config();
 const cors = require("cors");
-const multer = require('multer')
-const fs = require("fs");
-
 const connection = require("./config/db"); // connectToDb -->function
 connection();
 
 const userRoutes = require("./routes/userRoutes");
 const postRoutes = require("./routes/postRoutes");
+const fileUpload = require("express-fileupload");
 
 app.use(
   cors({
@@ -20,18 +18,13 @@ app.use(
 );
 app.use(express.json());
 
-
+app.use(fileUpload({
+  useTempFiles : true,
+  tempFileDir : '/tmp/'
+}));
 
 app.set("view engine", "ejs");
-const upload = multer({ dest: 'uploads/' })
 
-app.post("/uploads", upload.array("files", 10), function (req, res) {
- 
-
-  console.log(req.files);
-  console.log(req.body);
-  res.json({ message: "Files uploaded successfully.", files: req.files });
-});
 
 app.use("/users", userRoutes);
 app.use("/post", postRoutes);

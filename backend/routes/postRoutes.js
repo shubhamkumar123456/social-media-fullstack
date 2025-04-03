@@ -1,7 +1,7 @@
 const { Router } = require("express");
 const checkToken = require("../middleware/checkToken");
 const multer = require("multer");
-const path = require('path')
+const path = require("path");
 const {
   createPost,
   getAllPosts,
@@ -10,9 +10,10 @@ const {
   likePost,
   commentPost,
 } = require("../controllers/postController");
+
+
 const router = Router();
 const storage = multer.diskStorage({
-
   destination: (req, file, cb) => {
     cb(null, path.join(__dirname, "../uploads")); // Ensure correct path
   },
@@ -23,8 +24,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-
-router.post("/create", checkToken, upload.array("files", 10), createPost);
+router.post("/create", checkToken, createPost);
 router.get("/allPosts", getAllPosts);
 router.put("/update/:postId", checkToken, updatePosts);
 router.delete("/delete/:postId", checkToken, deletePost);
