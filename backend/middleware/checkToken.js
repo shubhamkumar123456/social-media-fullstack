@@ -12,9 +12,9 @@ const checkToken = async(req,res,next)=>{
 
       try {
         let decode = jwt.verify(token, JWT_SECRET);
-        console.log("decode", decode)
+        // console.log("decode", decode)
         let user = await userCollection.findById(decode._id);
-        console.log(user)
+        // console.log(user)
         req.user = user
         next()
 

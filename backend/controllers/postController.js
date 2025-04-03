@@ -2,12 +2,14 @@ const PostCollection = require("../models/postCollection");
 
 exports.createPost = async (req, res) => {
   try {
-    const { title, file } = req.body;
+    const { title } = req.body;
     const { _id } = req.user;
+    // req.files --> gives and array of objects
+    // const {file} = req.files
+
 
     console.log(req.body);
-    console.log("file = ", file[0]);
-
+    console.log(req.files)
     // let post = await PostCollection.create({
     //     title,
     //     file,

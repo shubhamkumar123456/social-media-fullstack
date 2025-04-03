@@ -3,7 +3,7 @@ const app = express();
 const port = 8080;
 require("dotenv").config();
 const cors = require("cors");
-const multer = require("multer");
+const multer = require('multer')
 const fs = require("fs");
 
 const connection = require("./config/db"); // connectToDb -->function
@@ -20,10 +20,10 @@ app.use(
 );
 app.use(express.json());
 
-const upload = multer({ dest: 'uploads/' })// Use storage
+
 
 app.set("view engine", "ejs");
-
+const upload = multer({ dest: 'uploads/' })
 
 app.post("/uploads", upload.array("files", 10), function (req, res) {
  
