@@ -48,7 +48,16 @@ userSchema.add({
             type:mongoose.Schema.Types.ObjectId,
             ref:'users'
         }
-    ]
+    ],
+
+    profilePic:{
+        type:String,
+        default:"https://as2.ftcdn.net/v2/jpg/10/54/09/27/1000_F_1054092780_liObYQo10Pn2xOo4CmGYZMeWiw0P7CT2.jpg"
+    },
+    coverPic:{
+        type:String,
+        default:"https://png.pngtree.com/thumb_back/fh260/background/20220312/pngtree-light-gray-background-texture-image_995291.jpg"
+    },
     
 })
 

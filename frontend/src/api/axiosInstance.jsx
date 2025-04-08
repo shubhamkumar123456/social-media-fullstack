@@ -19,7 +19,7 @@ const axiosInstance = axios.create({
         (config) => {
             dispatch(updateLoading(true));
             const token = JSON.parse(localStorage.getItem('authSocial'))
-            console.log("token = ", token)
+            // console.log("token = ", token)
             if (token) {
                 console.log(token.token)
                 config.headers.Authorization = token.token;

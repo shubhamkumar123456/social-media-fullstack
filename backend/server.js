@@ -18,11 +18,12 @@ app.use(
 );
 app.use(express.json());
 
-app.use(fileUpload({
-  useTempFiles : true,
-  tempFileDir : '/tmp/'
-}));
-
+app.use(
+  fileUpload({
+    useTempFiles: true,
+    tempFileDir: "/tmp/", // or any dir like "./uploads"
+  })
+);
 app.set("view engine", "ejs");
 
 

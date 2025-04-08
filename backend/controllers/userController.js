@@ -69,7 +69,7 @@ const loginUser = async (req, res) => {
 }
 
 const updateUser = async (req, res) => {
-    const { firstName, lastName, password, bio } = req.body
+    const { firstName, lastName, password, bio,profilePic,coverPic } = req.body
 
    try {
     const id = req.user._id
@@ -86,6 +86,12 @@ const updateUser = async (req, res) => {
     }
     if(bio){
         user.bio = bio
+    }
+    if(profilePic){
+        user.profilePic = profilePic
+    }
+    if(coverPic){
+        user.coverPic = coverPic
     }
    
 
@@ -184,8 +190,10 @@ const finalPasswordReset = async(req,res)=>{
 
 const getLoggedInUser = async(req,res)=>{
     try {
-        let user = {...req.user};
-        delete user.password
+        let user = req.user
+      
+        console.log("user = ", user)
+
         res.status(200).json(user)
     } catch (error) {
         res.status(500).json({msg:"error in getting user",error:error.message})

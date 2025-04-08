@@ -13,7 +13,7 @@ const checkToken = async(req,res,next)=>{
       try {
         let decode = jwt.verify(token, JWT_SECRET);
         // console.log("decode", decode)
-        let user = await userCollection.findById(decode._id);
+        let user = await userCollection.findById(decode._id).select('-password');
         // console.log(user)
         req.user = user
         next()

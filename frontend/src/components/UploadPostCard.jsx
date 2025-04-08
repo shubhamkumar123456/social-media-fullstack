@@ -1,6 +1,7 @@
 import EmojiPicker from 'emoji-picker-react'
 import React, { useState } from 'react'
 import axiosInstance from '../api/axiosInstance';
+
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 
@@ -50,7 +51,7 @@ const UploadPostCard = () => {
         const formData = new FormData();
     formData.append('title', text);
 
-    obj.file.forEach((file) => {
+    obj.file?.forEach((file) => {
       formData.append('file', file); // Correct way to append multiple files
     });
 
@@ -58,7 +59,13 @@ const UploadPostCard = () => {
       const response = await axios.post('http://localhost:8080/post/create', formData,{
         headers:{
           'Authorization':authSlice.token
-        }
+        },
+        onUploadProgress: (progressEvent) => {
+          const percent = Math.round(
+            (progressEvent.loaded * 100) / progressEvent.total
+          );
+          setUploadPercent(percent);
+        },
       });
       console.log(response.data);
       alert("Post uploaded successfully!");

@@ -5,12 +5,12 @@ import { logoutUser } from '../features/authSlice';
 
 const Navbar = () => {
     let userSlice = useSelector((state)=>state.auth);
-    console.log(userSlice)
+    // console.log(userSlice)
     let login = userSlice.login
     const [showDropDown, setshowDropDown] = useState(false);
     let dispatch = useDispatch()
   return (
-    <div className='sticky top-0 left-0 right-0'>
+    <div className='fixed z-50 top-0 left-0 right-0'>
         <nav className='w-full flex items-center px-8 justify-between bg-white text-black h-[65px]'>
             <Link to={'/'} className='text-xl font-semibold'>Social App</Link>
 

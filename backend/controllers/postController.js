@@ -1,43 +1,56 @@
 const PostCollection = require("../models/postCollection");
 const cloudinary = require('./Cloudinary')
 exports.createPost = async (req, res) => {
+  const { _id } = req.user;
+  const { title } = req.body;
+  let file = req.files || '';
+
+  console.log("Received files:", file);
+
   try {
-    const { title } = req.body;
-    const { _id } = req.user;
-    // req.files --> gives and array of objects
+    let newArray = [];
 
-    console.log(req.body);
-    console.log(req.files.file)
+    if (file && file.file) {
+      // Normalize to array
+      const fileArray = Array.isArray(file.file) ? file.file : [file.file];
 
-    let uploaded = req.files.file.map((obj,i)=>{
-      return cloudinary.uploader.upload(obj.tempFilePath, {
-        folder: "uploads", // Folder name in Cloudinary
-      });
-    })
-    console.log(uploaded)
-    let ans = await Promise.all(uploaded)
-    .then((ans)=>console.log(ans))
-    .catch((ans)=>console.log(ans))
+      // Upload each file to Cloudinary
+      const uploadPromises = fileArray.map((f) =>
+        cloudinary.uploader.upload(f.tempFilePath, {
+          folder: "uploads",
+          resource_type: "auto",
+        })
+      );
 
-    // let post = await PostCollection.create({
-    //     title,
-    //     file,
-    //     userId:_id
-    // })
+      const results = await Promise.all(uploadPromises);
 
-    res.status(201).json({ msg: "post created successfully" });
+      newArray = results.map((ele) => ({
+        public_id: ele.public_id,
+        url: ele.secure_url,
+      }));
+    }
+
+    // Save post with or without files
+    const post = await PostCollection.create({
+      title,
+      file: newArray,
+      userId: _id,
+    });
+
+    return res.status(201).json({ message: "Post created", post });
+
   } catch (error) {
-    res
-      .status(500)
-      .json({ error: error.message, msg: "error in post controller" });
+    console.error("Upload Error:", error);
+    return res.status(500).json({ error: error.message });
   }
 };
+
 
 exports.getAllPosts = async (req, res) => {
   try {
     let allPosts = await PostCollection.find().populate({
       path: "userId",
-      select: "-password",
+      select: [ "profilePic", "firstName" ,"lastName"]
     });
     res.status(200).json(allPosts);
   } catch (error) {

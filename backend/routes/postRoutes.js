@@ -31,4 +31,5 @@ router.delete("/delete/:postId", checkToken, deletePost);
 router.put("/likes/:postId", checkToken, likePost);
 router.post("/comment/:postId", checkToken, commentPost);
 
+
 module.exports = router;

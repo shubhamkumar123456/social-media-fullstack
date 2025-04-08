@@ -1,7 +1,23 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import UploadPostCard from '../components/UploadPostCard'
+import axiosInstance from '../api/axiosInstance'
+import PostCard from '../components/PostCard'
 
 const Home = () => {
+  const [allPosts, setallPosts] = useState([]);
+  // console.log(allPosts)
+  const fetchPosts = async()=>{
+      let response = await axiosInstance.get('post/allPosts')
+      let data = response.data;
+      // console.log(data)
+      if(data){
+        setallPosts(data)
+      }
+  }
+
+  useEffect(()=>{
+      fetchPosts()
+  },[])
   return (
     <div>
       <UploadPostCard/>
@@ -186,6 +202,14 @@ const Home = () => {
     </div>
   </div>
 </div> */}
+
+<div className="flex flex-col items-center">
+  {
+    allPosts.map((ele,i)=>{
+      return <PostCard key={ele._id} fetchPosts={fetchPosts}  ele = {ele}/>
+    })
+  }
+</div>
 
     </div>
   )

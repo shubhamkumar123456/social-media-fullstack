@@ -47,7 +47,7 @@ export const authSlice = createSlice({
     // Add reducers for additional action types here, and handle loading state as needed
   
     builder.addCase(fetchUserDetails.fulfilled, (state, action) => {
-      console.log(action)
+      // console.log(action)
         state.user = action.payload
     })
   },
