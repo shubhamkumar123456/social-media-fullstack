@@ -24,7 +24,7 @@ const Navbar = () => {
                {showDropDown && <ul onClick={()=>setshowDropDown(!showDropDown)} className='absolute top-[125%] min-w-[120px] text-center bg-white text-black right-0 bg-500'>
                     <li className='py-1 px-3'><Link to={'/login'}>Login</Link></li>
                     <li className='py-1 px-3'><Link to={'/signup'}>Signup</Link></li>
-                    <li className='py-1 px-3'><Link>Profile</Link></li>
+                    <li className='py-1 px-3'><Link to={'/userProfile'}>Profile</Link></li>
                     <li className='py-1 px-3'><Link>Settings</Link></li>
                     <li onClick={()=>dispatch(logoutUser())} className='py-1 px-3'><Link>Logout</Link></li>
                 </ul>}

@@ -147,3 +147,16 @@ exports.commentPost = async (req, res) => {
       .json({ msg: "error in adding comment", error: error.messsage });
   }
 };
+
+exports.userPosts = async(req,res)=>{
+  try {
+    const {_id} = req.user;
+  let posts = await PostCollection.find({userId:_id}).populate({
+    path: "userId",
+    select: [ "profilePic", "firstName" ,"lastName"]
+  });
+  res.status(200).json({posts})
+  } catch (error) {
+    res.status(500).json({msg:"error in user posts",error:error.message})
+  }
+}

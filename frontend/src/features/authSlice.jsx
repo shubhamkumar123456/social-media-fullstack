@@ -9,6 +9,7 @@ export const fetchUserDetails = createAsyncThunk(
   'users/fetchUserDetails',
   async () => {
     const response = await axiosInstance.get('/users/loggedInUser')
+    console.log("response = ", response.data)
     return response.data
   },
 )

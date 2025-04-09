@@ -25,6 +25,7 @@ import { useSelector } from 'react-redux';
 import axiosInstance from '../api/axiosInstance';
 
 export default function PostCard({ ele ,fetchPosts }) {
+    // console.log(ele)
     const settings = {
         dots: true,
         infinite: false,
@@ -64,15 +65,15 @@ export default function PostCard({ ele ,fetchPosts }) {
                             right: 0,
                             m: '-2px',
                             borderRadius: '50%',
-                            background:
-                                'linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%)',
+                            // background:
+                                // 'linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%)',
                         },
                     }}
                 >
                     <Avatar
                         size="sm"
-                        src="/static/logo.png"
-                        sx={{ p: 0.5, border: '2px solid', borderColor: 'background.body' }}
+                        src={ele.userId.profilePic}
+                        sx={{}}
                     />
                 </Box>
                 <Typography sx={{ fontWeight: 'lg' }}> {ele.userId.firstName.concat(' ', ele.userId.lastName)} </Typography>

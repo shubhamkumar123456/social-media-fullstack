@@ -1,13 +1,17 @@
 import axios from 'axios';
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { CiCamera } from "react-icons/ci";
 import axiosInstance from '../api/axiosInstance';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchUserDetails } from '../features/authSlice';
+import PostCard from '../components/PostCard';
 
 const UserProfile = () => {
 
+    const [allPosts, setallPosts] = useState([]);
+    let dispatch = useDispatch()
     let userSlice = useSelector((state)=>state.auth);
-    console.log(userSlice)
+    // console.log(userSlice)
 
     const handleCoverChanger = async(e)=>{
         let file = e.target.files[0];
@@ -24,9 +28,46 @@ const UserProfile = () => {
         let res = await axiosInstance.put('/users/update',{coverPic:data.secure_url})
         let ans = res.data;
         console.log(ans)
-
+        dispatch(fetchUserDetails())
 
     }
+    const handleProfileChanger = async(e)=>{
+        let file = e.target.files[0];
+        console.log(file)
+        let formData = new FormData();
+        formData.append('file',file);
+        formData.append('upload_preset','social12-2')
+
+        let response = await axios.post('https://api.cloudinary.com/v1_1/dsf7eyovf/upload',formData);
+        let data = response.data;
+        console.log(data);
+        console.log(data.secure_url);
+
+        let res = await axiosInstance.put('/users/update',{profilePic:data.secure_url})
+        let ans = res.data;
+        console.log(ans)
+        dispatch(fetchUserDetails())
+
+    }
+
+    const getUserPosts = async()=>{
+      let response = await axios.get('http://localhost:8080/post/userposts',{
+        headers:{
+          'Authorization':userSlice.token
+        }
+      })
+      console.log(response)
+      let data = response.data;
+      // console.log(data)
+      setallPosts(data.posts)
+    }
+
+    useEffect(()=>{
+        if(userSlice?.token){
+          // console.log("i am running")
+          getUserPosts();
+        }
+    },[userSlice?.token])
   return (
     <div>
       <div className='w-[90%] relative m-auto h-[350px]  bg-amber-950'>
@@ -37,16 +78,24 @@ const UserProfile = () => {
             <input onChange={handleCoverChanger} id='cover' hidden type="file" />
         </label>
         <div className='absolute w-[180px] h-[180px] bottom-0 left-12 translate-y-1/2 rounded-full bg-amber-400'>
-            <img src={'https://images.rawpixel.com/image_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIzLTEyL2hpcHBvdW5pY29ybl9hX2Z1bGxfZmllcnlfZHJhZ29uX2hlYWRfb25fYmxhY2tfYmFja2dyb3VuZF9pbl90aF9lY2I5YTZlOS01N2ZkLTRjMDYtYjIwZS05N2U3ZTk0ZmQxNDYuanBn.jpg'} alt="" className='w-full h-full object-cover object-center rounded-full'  />
+            <img src={userSlice?.user?.profilePic} alt="" className='w-full h-full object-cover object-center rounded-full'  />
 
             <label htmlFor="profile" className='absolute right-0 bottom-0 cursor-pointer'>
             <CiCamera color='white' size={30}  />
-            <input id='profile' hidden type="file" />
+            <input onChange={handleProfileChanger} id='profile' hidden type="file" />
         </label>
         </div>
       </div>
 
-
+      <div className='flex flex-col items-center'>
+            {
+            allPosts.length>0? allPosts.map((ele,i)=>{
+                return <PostCard ele={ele} fetchPosts={getUserPosts} />
+              })
+              :
+              <p className='text-center text-4xl mt-10'>No Post to show</p>
+            }
+      </div>
 
     </div>
   )
