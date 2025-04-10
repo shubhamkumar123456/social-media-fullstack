@@ -51,7 +51,7 @@ exports.getAllPosts = async (req, res) => {
     let allPosts = await PostCollection.find().populate({
       path: "userId",
       select: [ "profilePic", "firstName" ,"lastName"]
-    });
+    }).populate({path:'comments',populate:{path:'user',select:'firstName lastName profilePic'}});
     res.status(200).json(allPosts);
   } catch (error) {
     res

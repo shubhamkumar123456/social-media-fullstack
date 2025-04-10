@@ -23,9 +23,24 @@ import { FaHeart } from "react-icons/fa";
 import { FaRegHeart } from "react-icons/fa";
 import { useSelector } from 'react-redux';
 import axiosInstance from '../api/axiosInstance';
+import GlobalModal from './GlobalModal';
 
 export default function PostCard({ ele ,fetchPosts }) {
-    // console.log(ele)
+
+    const [isModalOpen, setIsModalOpen] = React.useState(false);
+    const showModal = () => {
+        setIsModalOpen(true);
+      };
+
+      const handleOk = () => {
+        setIsModalOpen(false);
+      };
+      const handleCancel = () => {
+        setIsModalOpen(false);
+      };
+
+    const inputRef = React.useRef()
+    console.log(ele)
     const settings = {
         dots: true,
         infinite: false,
@@ -47,8 +62,24 @@ export default function PostCard({ ele ,fetchPosts }) {
         fetchPosts()
     }
 
+    const handlePostSubmit =async ()=>{
+        let value = inputRef.current.value;
+        console.log(value)
+        let response = await axiosInstance.post(`/post/comment/${ele._id}`,{
+            text:value
+        })
+        let data = response.data;
+        console.log(data)
+        if(data){
+            inputRef.current.value = ''
+        }
+        fetchPosts()
+    }
+
     return (
-        <Card
+     <div>
+        <GlobalModal comments={ele.comments} isModalOpen={isModalOpen} handleOk={handleOk} handleCancel={handleCancel}  setIsModalOpen={setIsModalOpen} />
+           <Card
             variant="outlined"
             sx={{ minWidth: 300, '--Card-radius': (theme) => theme.vars.radius.xs }}
         >
@@ -122,7 +153,7 @@ export default function PostCard({ ele ,fetchPosts }) {
                     <FaHeart onClick={handleLike} size={30} color='red'/> <sup>{ele.likes.length}</sup>
                     </IconButton>}
                     <IconButton variant="plain" color="neutral" size="sm">
-                        <ModeCommentOutlined  /> <sup>{ele.comments.length}</sup>
+                        <ModeCommentOutlined onClick={showModal}  /> <sup>{ele.comments.length}</sup>
                     </IconButton>
                     {/* <IconButton variant="plain" color="neutral" size="sm">
                         <SendOutlined />
@@ -162,16 +193,19 @@ export default function PostCard({ ele ,fetchPosts }) {
                 <IconButton size="sm" variant="plain" color="neutral" sx={{ ml: -1 }}>
                     <Face />
                 </IconButton>
-                <Input
+                <input
+                    ref = {inputRef}
+                    className='outline-none px-2'
                     variant="plain"
                     size="sm"
                     placeholder="Add a comment…"
                     sx={{ flex: 1, px: 0, '--Input-focusedThickness': '0px' }}
                 />
-                <Link disabled underline="none" role="button">
+                <button onClick={handlePostSubmit} className='bg-blue-500 text-white px-4 py-1 rounded-md hover:bg-blue-600'  underline="none" role="button">
                     Post
-                </Link>
+                </button>
             </CardContent>
         </Card>
+     </div>
     );
 }
