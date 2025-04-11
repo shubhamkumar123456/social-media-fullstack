@@ -154,7 +154,7 @@ exports.userPosts = async(req,res)=>{
   let posts = await PostCollection.find({userId:_id}).populate({
     path: "userId",
     select: [ "profilePic", "firstName" ,"lastName"]
-  });
+  }).populate({path:'comments',populate:{path:'user',select:'firstName lastName profilePic'}});
   res.status(200).json({posts})
   } catch (error) {
     res.status(500).json({msg:"error in user posts",error:error.message})

@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken');
 const JWT_SECRET = "AbrakaDabra123@"
 const randomstring = require("randomstring");
 const nodemailer = require("nodemailer");
+const postCollection = require('../models/postCollection');
 
 
 
@@ -229,6 +230,20 @@ try {
 
 }
 
+const getFriend = async(req,res)=>{
+    const {friendId} = req.params;
+    let {_id} = req.user;
+
+    let friend = await userCollection.findById(friendId).select('-password');
+    let friendPost = await postCollection.find({userId:friendId}).populate({
+        path: "userId",
+        select: [ "profilePic", "firstName" ,"lastName"]
+      }).populate({path:'comments',populate:{path:'user',select:'firstName lastName profilePic'}});
+
+    res.status(200).json({msg:"friend find successfully",friend, friendPost })
+
+}
+
 
 module.exports = {
     registerUser,
@@ -239,5 +254,6 @@ module.exports = {
     resetPassword,
     finalPasswordReset,
     getLoggedInUser,
-    followUser
+    followUser,
+    getFriend
 }

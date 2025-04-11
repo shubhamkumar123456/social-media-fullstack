@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux';
 
 
 const GlobalModal = (props) => {
-        console.log(props)
+        // console.log(props)
         let userSlice = useSelector((state)=>state.auth)
         let userId = userSlice?.user?._id
   return (
@@ -16,10 +16,10 @@ const GlobalModal = (props) => {
        {/* <Button type="primary" onClick={showModal}>
         Open Modal
       </Button> */}
-      <Modal title="Basic Modal" open={props.isModalOpen} onOk={props.handleOk} onCancel={props.handleCancel}>
+      <Modal className='customModal'  title="Comments" open={props.isModalOpen} onOk={props.handleOk} onCancel={props.handleCancel}>
             {
                 props?.comments?.map((comnt, i)=>{
-                    return <div className='flex gap-2 relative mb-2 w-full'>
+                    return <div className='flex  gap-2 relative mb-2 w-full'>
                             <img src={comnt?.user?.profilePic} className='w-10 h-10 rounded-full' alt="" />
                             <div className='mt-2 w-full'>
                                 <h4 className='font-semibold'>{comnt?.user?.firstName.concat(' ',comnt?.user?.lastName)}</h4>

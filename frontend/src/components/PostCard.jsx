@@ -24,9 +24,13 @@ import { FaRegHeart } from "react-icons/fa";
 import { useSelector } from 'react-redux';
 import axiosInstance from '../api/axiosInstance';
 import GlobalModal from './GlobalModal';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 export default function PostCard({ ele ,fetchPosts }) {
 
+    const navigate = useNavigate()
+    // console.log(ele)
     const [isModalOpen, setIsModalOpen] = React.useState(false);
     const showModal = () => {
         setIsModalOpen(true);
@@ -40,7 +44,6 @@ export default function PostCard({ ele ,fetchPosts }) {
       };
 
     const inputRef = React.useRef()
-    console.log(ele)
     const settings = {
         dots: true,
         infinite: false,
@@ -59,6 +62,7 @@ export default function PostCard({ ele ,fetchPosts }) {
         let response = await axiosInstance.put(`/post/likes/${ele._id}`)
         let data = response.data
         // console.log(data)
+        toast(data.msg,{position:"bottom-right"})
         fetchPosts()
     }
 
@@ -70,6 +74,7 @@ export default function PostCard({ ele ,fetchPosts }) {
         })
         let data = response.data;
         console.log(data)
+        toast.success(data.msg,{position:"bottom-right"})
         if(data){
             inputRef.current.value = ''
         }
@@ -83,7 +88,8 @@ export default function PostCard({ ele ,fetchPosts }) {
             variant="outlined"
             sx={{ minWidth: 300, '--Card-radius': (theme) => theme.vars.radius.xs }}
         >
-            <CardContent orientation="horizontal" sx={{ alignItems: 'center', gap: 1 }}>
+            <CardContent onClick ={()=>navigate(user?._id===ele.userId?._id?'/userProfile':'/friendProfile',{state:ele.userId?._id})} orientation="horizontal" sx={{ alignItems: 'center', gap: 1 }}>
+               
                 <Box
                     sx={{
                         position: 'relative',
@@ -111,6 +117,7 @@ export default function PostCard({ ele ,fetchPosts }) {
                 <IconButton variant="plain" color="neutral" size="sm" sx={{ ml: 'auto' }}>
                     <MoreHoriz />
                 </IconButton>
+             
             </CardContent>
             <div className="slider-container w-[300px] h-[250px]">
       {ele.file.length>0 ?<Slider {...settings}>

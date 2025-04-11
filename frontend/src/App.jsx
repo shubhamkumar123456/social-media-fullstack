@@ -11,6 +11,7 @@ import { fetchUserDetails } from "./features/authSlice"
 import LoaderComponent from "./components/LoaderComponent"
 import ForgetPassword from "./pages/ForgetPassword"
 import UserProfile from "./pages/UserProfile"
+import FriendProfile from './pages/FriendProfile'
 
 
 function App() {
@@ -44,6 +45,7 @@ function App() {
             <Route path="/signup" element={login ===false? <Signup /> : <Navigate to='/'/>} />
             <Route path="/forget-password" element={login ===false? <ForgetPassword /> : <Navigate to='/'/>} />
             <Route path="/userProfile"  element = {login===true?<UserProfile/>:<Navigate to={'/login'}/>}/>
+            <Route path="/friendProfile"  element = {login===true?<FriendProfile/>:<Navigate to={'/login'}/>}/>
           </Routes>
         </main>
         <ToastContainer />

@@ -87,6 +87,17 @@ const UserProfile = () => {
         </div>
       </div>
 
+      <div className='flex justify-center items-center gap-8 my-6'>
+        <div className='text-center  rounded  shadow'>
+          <p className='font-semibold mb-2'>Followers</p>
+          <span>{userSlice?.user?.followers?.length}</span>
+        </div>
+        <div className='text-center  rounded  shadow'>
+          <p className='font-semibold mb-2'>Followings</p>
+          <span>{userSlice?.user?.followings?.length}</span>
+        </div>
+      </div>
+
       <div className='flex flex-col items-center'>
             {
             allPosts.length>0? allPosts.map((ele,i)=>{
