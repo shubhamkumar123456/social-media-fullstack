@@ -52,7 +52,7 @@ const loginUser = async (req, res) => {
     };
 
     if (comparePassword) {
-      let token = jwt.sign({ _id: user._id }, JWT_SECRET, { expiresIn: "1m" });
+      let token = jwt.sign({ _id: user._id }, JWT_SECRET, { expiresIn: "24h" });
       res.status(200).json({ msg: "login successfully", user: obj, token });
     } else {
       res.status(401).json({ msg: "invalid credentials" });
