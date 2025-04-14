@@ -10,6 +10,7 @@ const {
   getLoggedInUser,
   followUser,
   getFriend,
+  findUserByName,
 } = require("../controllers/userController");
 const router = express.Router();
 const { body } = require("express-validator");
@@ -48,5 +49,6 @@ router.post("/forgot-password/:resetToken", finalPasswordReset);
 router.get("/loggedInUser", checkToken, getLoggedInUser);
 router.put("/follow/:friendId", checkToken, followUser);
 router.get("/friend/:friendId", checkToken, getFriend);
+router.get('/getuserName',findUserByName)
 
 module.exports = router;

@@ -1,5 +1,7 @@
 import axios from 'axios';
-import { updateLoading } from '../features/authSlice';
+import { logoutUser, updateLoading } from '../features/authSlice';
+import { toast } from 'react-toastify';
+import { Navigate } from 'react-router-dom';
 
 
 
@@ -27,6 +29,7 @@ const axiosInstance = axios.create({
             return config;
         },
         (error) => {
+            console.log(error)
             dispatch(updateLoading(false));
             return Promise.reject(error);
         }
@@ -38,6 +41,14 @@ const axiosInstance = axios.create({
             return response;
         },
         (error) => {
+            console.log(error)
+            if(error.response.data.error==='jwt expired'){
+                toast.warning('token expired please login again',{position:"top-center"})
+                setTimeout(()=>{
+                    localStorage.removeItem('authSocial')
+                   dispatch(logoutUser())
+                },3000)
+            }
             dispatch(updateLoading(false));
             return Promise.reject(error);
         }
