@@ -8,6 +8,7 @@ connection();
 
 const userRoutes = require("./routes/userRoutes");
 const postRoutes = require("./routes/postRoutes");
+const messageRoutes = require("./routes/messageRoutes");
 const fileUpload = require("express-fileupload");
 
 app.use(
@@ -29,6 +30,7 @@ app.set("view engine", "ejs");
 
 app.use("/users", userRoutes);
 app.use("/post", postRoutes);
+app.use("/message", messageRoutes);
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
