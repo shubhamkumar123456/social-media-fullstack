@@ -12,6 +12,7 @@ import LoaderComponent from "./components/LoaderComponent"
 import ForgetPassword from "./pages/ForgetPassword"
 import UserProfile from "./pages/UserProfile"
 import FriendProfile from './pages/FriendProfile'
+import ChatPage from "./pages/ChatPage"
 
 
 function App() {
@@ -46,6 +47,7 @@ function App() {
             <Route path="/forget-password" element={login ===false? <ForgetPassword /> : <Navigate to='/'/>} />
             <Route path="/userProfile"  element = {login===true?<UserProfile/>:<Navigate to={'/login'}/>}/>
             <Route path="/friendProfile"  element = {login===true?<FriendProfile/>:<Navigate to={'/login'}/>}/>
+            <Route path="/chat"  element = {login===true?<ChatPage/>:<Navigate to={'/login'}/>}/>
           </Routes>
         </main>
         <ToastContainer />

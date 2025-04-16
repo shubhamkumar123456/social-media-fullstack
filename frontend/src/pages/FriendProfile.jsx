@@ -88,7 +88,7 @@ const UserProfile = () => {
             
                 </div>
                 <div>
-                <Link  className='bg-blue-500 px-4 py-2 rounded hover:bg-blue-700'>Chat</Link>
+                <Link to={'/chat'} state={friendId}  className='bg-blue-500 px-4 py-2 rounded hover:bg-blue-700'>Chat</Link>
                 </div>
             </div>
 
