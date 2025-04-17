@@ -1,10 +1,13 @@
 const express = require("express");
 const app = express();
+const server = require('http').createServer(app);
 const port = 8080;
 require("dotenv").config();
 const cors = require("cors");
 const connection = require("./config/db"); // connectToDb -->function
 connection();
+
+const io = require('socket.io')(server);
 
 const userRoutes = require("./routes/userRoutes");
 const postRoutes = require("./routes/postRoutes");
@@ -28,10 +31,23 @@ app.use(
 app.set("view engine", "ejs");
 
 
+io.on('connection', (socket) => {
+  console.log('new connection stablished', socket.id)
+
+  socket.on('msg',(ans)=>{
+    console.log(ans)
+  })
+
+  socket.emit('fire', {msg:"my friend is injured need backup"})
+
+});
+
+
+
 app.use("/users", userRoutes);
 app.use("/post", postRoutes);
 app.use("/message", messageRoutes);
 
-app.listen(port, () => {
+server.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
