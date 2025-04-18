@@ -31,11 +31,31 @@ app.use(
 app.set("view engine", "ejs");
 
 
+let users = new Map();
+
+
 io.on('connection', (socket) => {
   console.log('new connection stablished', socket.id)
 
-  socket.on('msg',(ans)=>{
+  socket.on('newUser',(userId)=>{
+    console.log(userId)
+    users.set(userId, socket.id)
+    console.log(users)
+  })
+
+  socket.on('sendMessage',(ans)=>{
     console.log(ans)
+    if(users.has(ans.friendId)){
+      console.log("ha pdi hai")
+      let friendSocketId = users.get(ans.friendId)
+      console.log("friendSocketId = ", friendSocketId)
+        if(friendSocketId){
+          socket.to(friendSocketId).emit('replyMessage',ans)
+        }
+    }
+    else{
+      console.log("not exists")
+    }
   })
 
   socket.emit('fire', {msg:"my friend is injured need backup"})

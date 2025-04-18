@@ -13,9 +13,8 @@ import ForgetPassword from "./pages/ForgetPassword"
 import UserProfile from "./pages/UserProfile"
 import FriendProfile from './pages/FriendProfile'
 import ChatPage from "./pages/ChatPage"
-import { io } from "socket.io-client";
+import { connectSocket } from "./features/socketSlice"
 
-const socket = io("http://localhost:8080",{transports:['websocket']});
 
 function App() {
   const dispatch = useDispatch();
@@ -38,14 +37,12 @@ function App() {
 
 
   useEffect(()=>{
-    socket.emit('msg','hello how are you')
-  },[])
+    if(authSlice?.user?._id){
+      dispatch(connectSocket(authSlice?.user?._id))
+    }
+  },[authSlice?.user?._id])
 
-  useEffect(()=>{
-    socket.on('fire',({msg})=>{
-      console.log(msg)
-    })
-  },[])
+
 
   return (
     <>

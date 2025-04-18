@@ -4,6 +4,7 @@ import axiosInstance from "../api/axiosInstance";
 import { useEffect, useRef, useState } from "react";
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import { socket} from "../features/socketSlice";
 dayjs.extend(relativeTime);
 
 
@@ -43,6 +44,7 @@ const ChatPage = () => {
     const handleSend = async()=>{
         let obj = {text:inputRef.current.value}
         console.log(obj)
+        socket.emit('sendMessage',{...obj,userId,friendId})
         let response = await axiosInstance.post(`/message/send/${friendId}`,obj)
         let data  = response.data;
         console.log(data)
@@ -54,6 +56,13 @@ const ChatPage = () => {
     useEffect(() => {
         getChat()
     }, [])
+
+
+    useEffect(()=>{
+        socket.on('replyMessage',(ans)=>{
+            console.log(ans)
+        })
+    },[])
     return (
         <>
             <h1>This is chat page</h1>
