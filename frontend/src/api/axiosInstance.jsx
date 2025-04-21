@@ -3,11 +3,11 @@ import { logoutUser, updateLoading } from '../features/authSlice';
 import { toast } from 'react-toastify';
 import { Navigate } from 'react-router-dom';
 
-
+import URL from '../../url';
 
 
 const axiosInstance = axios.create({
-    baseURL: 'http://localhost:8080',
+    baseURL: URL,
     withCredentials:true,
     cors:true,
     headers: {

@@ -1,5 +1,6 @@
 import { io } from "socket.io-client";
-let url = "http://localhost:8080";
+import URL from "../../url";
+let url = URL;
 const socket = io(url, {
     transports: ["websocket"],
     reconnection:true,

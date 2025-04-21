@@ -5,7 +5,7 @@ import axiosInstance from '../api/axiosInstance';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchUserDetails } from '../features/authSlice';
 import PostCard from '../components/PostCard';
-
+import URL from '../../url';
 const UserProfile = () => {
 
     const [allPosts, setallPosts] = useState([]);
@@ -18,9 +18,9 @@ const UserProfile = () => {
         console.log(file)
         let formData = new FormData();
         formData.append('file',file);
-        formData.append('upload_preset','social12-2')
+        formData.append('upload_preset',import.meta.env.VITE_UPLOAD_PRESET)
 
-        let response = await axios.post('https://api.cloudinary.com/v1_1/dsf7eyovf/upload',formData);
+        let response = await axios.post(`https://api.cloudinary.com/v1_1/${import.meta.env.VITE_Cloudinary_NAME}/upload`,formData);
         let data = response.data;
         console.log(data);
         console.log(data.secure_url);
@@ -36,9 +36,9 @@ const UserProfile = () => {
         console.log(file)
         let formData = new FormData();
         formData.append('file',file);
-        formData.append('upload_preset','social12-2')
+        formData.append('upload_preset',import.meta.env.VITE_UPLOAD_PRESET)
 
-        let response = await axios.post('https://api.cloudinary.com/v1_1/dsf7eyovf/upload',formData);
+        let response = await axios.post(`https://api.cloudinary.com/v1_1/${import.meta.env.VITE_Cloudinary_NAME}/upload`,formData);
         let data = response.data;
         console.log(data);
         console.log(data.secure_url);
@@ -51,7 +51,7 @@ const UserProfile = () => {
     }
 
     const getUserPosts = async()=>{
-      let response = await axios.get('http://localhost:8080/post/userposts',{
+      let response = await axios.get(URL+'/post/userposts',{
         headers:{
           'Authorization':userSlice.token
         }

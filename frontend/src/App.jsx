@@ -14,9 +14,13 @@ import UserProfile from "./pages/UserProfile"
 import FriendProfile from './pages/FriendProfile'
 import ChatPage from "./pages/ChatPage"
 import { connectSocket } from "./features/socketSlice"
-
+import URL from "../url"
 
 function App() {
+
+  console.log(URL)
+
+
   const dispatch = useDispatch();
 
   let authSlice = useSelector((state)=>state.auth);

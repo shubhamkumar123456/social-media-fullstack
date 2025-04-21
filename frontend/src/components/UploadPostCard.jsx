@@ -1,6 +1,7 @@
 import EmojiPicker from 'emoji-picker-react'
 import React, { useState } from 'react'
 import axiosInstance from '../api/axiosInstance';
+import URL from '../../url';
 
 import axios from 'axios';
 import { useSelector } from 'react-redux';
@@ -56,7 +57,7 @@ const UploadPostCard = () => {
     });
 
     try {
-      const response = await axios.post('http://localhost:8080/post/create', formData, {
+      const response = await axios.post(URL+'/post/create', formData, {
         headers: {
           'Authorization': authSlice.token
         },
