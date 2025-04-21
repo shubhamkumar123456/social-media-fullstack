@@ -133,7 +133,7 @@ const forgetPassword = async (req, res) => {
         from: process.env.NODE_MAILER_EMAIL, // sender address
         to: email, // list of receivers
         subject: "Reset Your Social media App Password", // Subject line
-        text: `Please click the link below to update your Password \n  http://localhost:8080/users/reset-password/${resetPasswordCode}`, // plain text body
+        text: `Please click the link below to update your Password \n  https://social-media-fullstack-ggd2.onrender.com/users/reset-password/${resetPasswordCode}`, // plain text body
       });
 
       console.log("Message sent: %s", info.messageId);
