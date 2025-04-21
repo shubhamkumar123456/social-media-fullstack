@@ -18,9 +18,9 @@ export const socketSlice = createSlice({
         }
     },
     disconnectSocket:(state,action)=>{
-        if(!state.isConnected){
+        if(state.isConnected){
             socket.disconnect();
-            state.isConnected = true
+            state.isConnected = false
         }
     }
   },

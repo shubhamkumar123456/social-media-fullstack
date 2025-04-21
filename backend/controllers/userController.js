@@ -3,7 +3,7 @@ const bcrypt = require("bcryptjs");
 const salt = bcrypt.genSaltSync(10);
 const { validationResult } = require("express-validator");
 const jwt = require("jsonwebtoken");
-const JWT_SECRET = "AbrakaDabra123@";
+const JWT_SECRET = process.env.JWT_SECRET
 const randomstring = require("randomstring");
 const nodemailer = require("nodemailer");
 const postCollection = require("../models/postCollection");
@@ -122,15 +122,15 @@ const forgetPassword = async (req, res) => {
       port: 587,
       secure: false, // true for port 465, false for other ports
       auth: {
-        user: "shubhamfarainzi@gmail.com",
-        pass: "tyvd ibmm xerz daqc",
+        user: process.env.NODE_MAILER_EMAIL,
+        pass: process.env.NODE_MAILER_PASS,
       },
     });
 
     async function main() {
       // send mail with defined transport object
       const info = await transporter.sendMail({
-        from: "shubhamfarainzi@gmail.com", // sender address
+        from: process.env.NODE_MAILER_EMAIL, // sender address
         to: email, // list of receivers
         subject: "Reset Your Social media App Password", // Subject line
         text: `Please click the link below to update your Password \n  http://localhost:8080/users/reset-password/${resetPasswordCode}`, // plain text body
