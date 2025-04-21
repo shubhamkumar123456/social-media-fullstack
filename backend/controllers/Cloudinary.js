@@ -10,9 +10,9 @@ dotenv.config(); // Load environment variables
 //   api_secret: process.env.CLOUDINARY_API_SECRET,
 // });
 cloudinary.config({ 
-    cloud_name: 'dsf7eyovf', 
-    api_key: '425934167632424', 
-    api_secret: '3aKVTy84SopbQmIgd6mEDdIjXa4' // Click 'View API Keys' above to copy your API secret
+    cloud_name: process.env.CLOUD_NAME, 
+    api_key: process.env.API_KEY, 
+    api_secret: process.env.API_SECRET // Click 'View API Keys' above to copy your API secret
 });
 
 

@@ -21,7 +21,7 @@ connection();
 // Middleware
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: ["http://localhost:5173",'https://social-media-fullstack-sandy.vercel.app'],
     credentials: true,
   })
 );
